@@ -1,0 +1,22 @@
+{
+  "name": "editor-grounds",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/olishevskyalex/editor-grounds.git"
+  },
+  "author": "Olishevsky Alex",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/olishevskyalex/editor-grounds/issues"
+  },
+  "homepage": "https://github.com/olishevskyalex/editor-grounds#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
