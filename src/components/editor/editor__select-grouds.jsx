@@ -24,6 +24,7 @@ export default class EditorSelectGrounds extends React.Component {
         name="ground-id"
         onChange={this.props.onChange}
       >
+        <option key="default" value="default">Выберите участок</option>
         {this.getOptions(this.props.grounds)}
       </select>
     );

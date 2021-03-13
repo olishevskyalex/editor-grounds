@@ -17,6 +17,14 @@ export default class Editor extends React.Component {
     this.handleChangeInput = this.handleChangeInput.bind(this);
   }
   changeVeiwData(e) {
+    if (e.target.value === 'default') {
+      this.setState({
+        number: '',
+        size: '',
+        price: '',
+      });
+      return
+    }
     const groundID = e.target.value;
     const groundActive = this.props.grounds[groundID];
     this.setState({
