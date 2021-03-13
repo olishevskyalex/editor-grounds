@@ -8,16 +8,26 @@ import Editor from './components/editor/editor.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      grounds: null
+    }
     this.getMapConfig();
   }
   async getMapConfig() {
-    let response = await fetch('/api');
-    console.log(response);
+    try {
+      let response = await fetch('/api');
+      let json = await response.json();
+      this.setState({
+        grounds: json,
+      });
+    } catch(e) {
+      console.log(e);
+    }
   }
   render() {
     return (
       <div className="app">
-        <Editor />
+        <Editor grounds={this.state.grounds} />
       </div>
     );
   }
