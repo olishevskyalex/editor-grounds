@@ -13,9 +13,10 @@ export default class Editor extends React.Component {
       number: '',
       size: '',
       price: '',
+      status: 'default',
     }
     this.changeVeiwData = this.changeVeiwData.bind(this);
-    this.handleChangeInput = this.handleChangeInput.bind(this);
+    this.controlChange = this.controlChange.bind(this);
   }
   changeVeiwData(e) {
     if (e.target.value === 'default') {
@@ -23,6 +24,7 @@ export default class Editor extends React.Component {
         number: '',
         size: '',
         price: '',
+        status: 'default',
       });
       return
     }
@@ -32,16 +34,15 @@ export default class Editor extends React.Component {
       number: groundActive.number,
       size: groundActive.size,
       price: groundActive.price,
+      status: groundActive.status,
     });
-    console.log(this.state);
   }
-  handleChangeInput(e) {
+  controlChange(e) {
     let value = e.target.value;
     let name = e.target.name;
     this.setState({
       [name]: value,
     });
-    console.log(this.state);
   }
   render() {
     return (
@@ -55,22 +56,23 @@ export default class Editor extends React.Component {
           name="number"
           placeholder="Номер участка"
           value={this.state.number}
-          onChange={this.handleChangeInput}
+          onChange={this.controlChange}
         />
         <EditorInput 
           name="size" 
           placeholder="Размер" 
           value={this.state.size}
-          onChange={this.handleChangeInput}
+          onChange={this.controlChange}
         />
         <EditorInput 
           name="price"
           placeholder="Цена"
           value={this.state.price}
-          onChange={this.handleChangeInput}
+          onChange={this.controlChange}
         />
         <EditorGroundStatus
-          value="free"
+          value={this.state.status}
+          onChange={this.controlChange}
         />
         <button className={s.button} type="submit">Cохранить</button>
       </form>

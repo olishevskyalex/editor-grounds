@@ -1,9 +1,14 @@
 import React from 'react';
 import s from './editor__ground-status.module.scss';
 
-export default function EditorGroundStatus() {
+export default function EditorGroundStatus(props) {
   return (
-    <select className={s['editor__ground-status']}>
+    <select 
+      name="status"
+      className={s['editor__ground-status']}
+      value={props.value}
+      onChange={props.onChange}
+    >
       <option value="default">Статус не выбран</option>
       <option value="free">Свободно</option>
       <option value="booked">Забронировано</option>
