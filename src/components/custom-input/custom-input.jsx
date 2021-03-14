@@ -1,13 +1,17 @@
 import React from 'react';
 import s from './custom-input.module.scss';
 
+import PasswordButtons from './_password-buttons.jsx';
+
 export default class AuthInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isActive: false,
+      type: this.props.type,
     }
     this.controlInput = this.controlInput.bind(this);
+    this.controlPasswordButtons = this.controlPasswordButtons.bind(this);
   }
   controlInput(e) {
     const value = e.target.value;
@@ -37,14 +41,28 @@ export default class AuthInput extends React.Component {
     if (this.state.isActive) {
       selectors += ' ' + s.input_active;
     }
+    if (this.props.type === 'password') {
+      selectors += ' ' + s.input_password;
+    }
     return (
       <input 
         className={selectors} 
-        type={this.props.type}
+        type={this.state.type}
         name={this.props.name}
         onChange={this.controlInput}
       />
     );
+  }
+  controlPasswordButtons() {
+    if (this.state.type === 'password') {
+      this.setState({
+        type: 'text'
+      });
+      return;
+    }
+    this.setState({
+      type: 'password'
+    });
   }
   render() {
     return (
@@ -53,6 +71,7 @@ export default class AuthInput extends React.Component {
           {this.getPlaceholder()}
           {this.getInput()}
         </label>
+        {this.props.type === 'password' && <PasswordButtons onClick={this.controlPasswordButtons} />}
       </div>
     );
   }
