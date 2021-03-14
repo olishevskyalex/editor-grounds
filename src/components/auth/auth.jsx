@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './auth.module.scss';
 
-import AuthInput from './auth__input.jsx';
+import CustomInput from './../custom-input/custom-input.jsx';
 
 export default class Auth extends React.Component {
   constructor(props) {
@@ -14,12 +14,12 @@ export default class Auth extends React.Component {
         className={s.auth} 
         method="post"
       >
-        <AuthInput
+        <CustomInput
           type="text"
           name="login"
           placeholder="Логин"
         />
-        <AuthInput
+        <CustomInput
           type="password"
           name="password"
           placeholder="Пароль"

@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './auth__input.module.scss';
+import s from './custom-input.module.scss';
 
 export default class AuthInput extends React.Component {
   constructor(props) {
@@ -48,7 +48,7 @@ export default class AuthInput extends React.Component {
   }
   render() {
     return (
-      <div className={s.auth__input}>
+      <div className={s['custom-input']}>
         <label className={s.label}>
           {this.getPlaceholder()}
           {this.getInput()}
