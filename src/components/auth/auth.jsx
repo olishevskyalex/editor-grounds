@@ -15,6 +15,7 @@ export default class Auth extends React.Component {
         className={s.auth} 
         method="post"
       >
+        <span class={s.title}>Войти в редактор</span>
         <CustomInput
           type="text"
           name="login"
