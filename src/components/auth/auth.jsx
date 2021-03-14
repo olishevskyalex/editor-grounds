@@ -2,6 +2,7 @@ import React from 'react';
 import s from './auth.module.scss';
 
 import CustomInput from './../custom-input/custom-input.jsx';
+import CustomButton from './../custom-button/custom-button.jsx';
 
 export default class Auth extends React.Component {
   constructor(props) {
@@ -23,6 +24,10 @@ export default class Auth extends React.Component {
           type="password"
           name="password"
           placeholder="Пароль"
+        />
+        <CustomButton 
+          type="submit"
+          text="Войти"
         />
       </form>
     );
