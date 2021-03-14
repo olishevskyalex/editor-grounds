@@ -3,6 +3,7 @@ import s from './editor.module.scss';
 
 import EditorSelectGrounds from './editor__select-grouds.jsx';
 import EditorInput from './editor__input.jsx';
+import EditorGroundStatus from './editor__ground-status.jsx';
 
 export default class Editor extends React.Component {
   constructor(props) {
@@ -67,6 +68,9 @@ export default class Editor extends React.Component {
           placeholder="Цена"
           value={this.state.price}
           onChange={this.handleChangeInput}
+        />
+        <EditorGroundStatus
+          value="free"
         />
         <button className={s.button} type="submit">Cохранить</button>
       </form>
