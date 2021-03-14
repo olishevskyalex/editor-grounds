@@ -4,6 +4,7 @@ import regeneratorRuntime from "regenerator-runtime";
 import './app.scss';
 
 import Editor from './components/editor/editor.jsx';
+import Auth from './components/auth/auth.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <Editor grounds={this.state.grounds} />
+        <Auth />
       </div>
     );
   }
