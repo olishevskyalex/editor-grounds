@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import regeneratorRuntime from "regenerator-runtime";
+import regeneratorRuntime from 'regenerator-runtime';
+import {BrowserRouter, Route} from 'react-router-dom';
 import '@fortawesome/fontawesome-free/js/fontawesome';
 import '@fortawesome/fontawesome-free/js/solid';
 import '@fortawesome/fontawesome-free/js/regular';
@@ -32,7 +33,14 @@ class App extends React.Component {
   render() {
     return (
       <div className="app">
-        <Auth />
+        <BrowserRouter>
+          <Route path='/editor'>
+            <Editor />
+          </Route>
+          <Route exact path='/'>
+            <Auth />
+          </Route>
+        </BrowserRouter>
       </div>
     );
   }

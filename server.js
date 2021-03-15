@@ -19,8 +19,16 @@ app.use(session({
   }
 }));
 
+app.get('/editor', (req, res) => {
+  if (req.session.isAuth === true) {
+    res.sendFile(__dirname + '/public/index.html');
+    return;
+  }
+  res.status(403).send('Error 403');
+});
+
 app.get('/', (req, res) => {
-  res.send('index.html');
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 app.get('/api', (req, res) => {

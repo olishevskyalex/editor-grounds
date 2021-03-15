@@ -1,4 +1,5 @@
 import React from 'react';
+import {Redirect} from 'react-router-dom';
 import s from './auth.module.scss';
 
 import CustomInput from './../custom-input/custom-input.jsx';
@@ -12,6 +13,7 @@ export default class Auth extends React.Component {
       valueLogin: '',
       valuePassword: '',
       error: null,
+      isAuth: false,
     }
     this.sendFrom = this.sendFrom.bind(this);
     this.controlInput = this.controlInput.bind(this);
@@ -40,6 +42,7 @@ export default class Auth extends React.Component {
     }
   }
   async sendFrom(e) {
+    let isAuth = false;
     try {
       e.preventDefault();
       const authData = {
@@ -60,6 +63,7 @@ export default class Auth extends React.Component {
       this.setState({
         error: null,
       });
+      isAuth = true;
     } catch(e) {
       this.setState({
         error: e.message,
@@ -68,38 +72,49 @@ export default class Auth extends React.Component {
     this.setState({
       valueLogin: '',
       valuePassword: '',
-    }); 
+    });
+    if (isAuth) {
+      this.setState({
+        isAuth: true,
+      })
+    }
+  }
+  redirect() {
+    if (this.state.isAuth) {
+      return <Redirect to="/editor" />
+    }
   }
   render() {
     return (
       <div className={s.auth}>
+        {this.redirect()}
         {this.getError()}
         <form 
-        action="/auth" 
-        className={s.form} 
-        method="post"
-        onSubmit={this.sendFrom}
-      >
-        <span className={s.title}>Авторизация</span>
-        <CustomInput
-          type="text"
-          name="login"
-          placeholder="Логин"
-          value={this.state.valueLogin}
-          onChange={this.controlInput}
-        />
-        <CustomInput
-          type="password"
-          name="password"
-          placeholder="Пароль"
-          value={this.state.valuePassword}
-          onChange={this.controlInput}
-        />
-        <CustomButton 
-          type="submit"
-          text="Войти"
-        />
-      </form>
+          action="/auth" 
+          className={s.form} 
+          method="post"
+          onSubmit={this.sendFrom}
+        >
+          <span className={s.title}>Авторизация</span>
+          <CustomInput
+            type="text"
+            name="login"
+            placeholder="Логин"
+            value={this.state.valueLogin}
+            onChange={this.controlInput}
+          />
+          <CustomInput
+            type="password"
+            name="password"
+            placeholder="Пароль"
+            value={this.state.valuePassword}
+            onChange={this.controlInput}
+          />
+          <CustomButton 
+            type="submit"
+            text="Войти"
+          />
+        </form>
       </div>
     );
   }
