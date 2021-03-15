@@ -14,6 +14,7 @@ export default class AuthInput extends React.Component {
     this.controlPasswordButtons = this.controlPasswordButtons.bind(this);
   }
   controlInput(e) {
+    this.props.onChange(e);
     const value = e.target.value;
     if (value.length > 0) {
       this.setState({
@@ -50,6 +51,7 @@ export default class AuthInput extends React.Component {
         type={this.state.type}
         name={this.props.name}
         onChange={this.controlInput}
+        value={this.props.value}
       />
     );
   }
@@ -61,7 +63,7 @@ export default class AuthInput extends React.Component {
       return;
     }
     this.setState({
-      type: 'password'
+      type: 'password',
     });
   }
   render() {
