@@ -54,6 +54,7 @@ export default class AuthInput extends React.Component {
     );
   }
   controlPasswordButtons() {
+    console.log(this.state.type);
     if (this.state.type === 'password') {
       this.setState({
         type: 'text'
@@ -71,7 +72,13 @@ export default class AuthInput extends React.Component {
           {this.getPlaceholder()}
           {this.getInput()}
         </label>
-        {this.props.type === 'password' && <PasswordButtons onClick={this.controlPasswordButtons} />}
+        {
+          this.props.type === 'password' && 
+          <PasswordButtons 
+            onClick={this.controlPasswordButtons}
+            inputType={this.state.type}
+          />
+        }
       </div>
     );
   }

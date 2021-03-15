@@ -5,13 +5,11 @@ import s from './_password-buttons.module.scss';
 export default class PasswordButtons extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isShow: false,
-    }
   }
   getShowButton() {
+    console.log(this.props);
     let selectors = s.button;
-    if (!this.state.isShow) {
+    if (this.props.inputType === 'password') {
       selectors += ' ' + s.button_active;
     }
     return (
@@ -26,7 +24,7 @@ export default class PasswordButtons extends React.Component {
   }
   getHideButton() {
     let selectors = s.button;
-    if (this.state.isShow) {
+    if (this.props.inputType === 'text') {
       selectors += ' ' + s.button_active;
     }
     return (
@@ -43,7 +41,7 @@ export default class PasswordButtons extends React.Component {
     return (
       <div className={s['password-buttons']}>
         {this.getShowButton()}
-        
+        {this.getHideButton()}
       </div>
     );
   }
