@@ -7,7 +7,6 @@ export default class PasswordButtons extends React.Component {
     super(props);
   }
   getShowButton() {
-    console.log(this.props);
     let selectors = s.button;
     if (this.props.inputType === 'password') {
       selectors += ' ' + s.button_active;

@@ -1,5 +1,12 @@
 .auth {
-  width: 350px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.form {
+  width: calc(100% - 50px);
   padding: 50px 25px;
   background: #673ab7;
   display: flex;

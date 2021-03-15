@@ -3,16 +3,30 @@ import s from './auth.module.scss';
 
 import CustomInput from './../custom-input/custom-input.jsx';
 import CustomButton from './../custom-button/custom-button.jsx';
+import Error from './../error/error.jsx';
 
 export default class Auth extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isError: false,
+    }
+  }
+  getError() {
+    if (!this.state.isError) {
+      return;
+    }
+    return (
+      <Error text='Неправильный логин или пароль.' />
+    );
   }
   render() {
     return (
-      <form 
+      <div className={s.auth}>
+        {this.getError()}
+        <form 
         action="/log-in" 
-        className={s.auth} 
+        className={s.form} 
         method="post"
       >
         <span className={s.title}>Авторизация</span>
@@ -31,6 +45,7 @@ export default class Auth extends React.Component {
           text="Войти"
         />
       </form>
+      </div>
     );
   }
 }

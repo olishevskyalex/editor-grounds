@@ -1,0 +1,16 @@
+.error {
+  width: calc(100% - 50px);
+  padding: 30px 25px;
+  background: rgba(0, 0, 0, .2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.text {
+  margin: 0;
+  font-family: Arial;
+  font-size: 16px;
+  color: #fff;
+}
