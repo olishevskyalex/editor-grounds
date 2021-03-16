@@ -6,8 +6,10 @@ import PasswordButtons from './_password-buttons.jsx';
 export default class AuthInput extends React.Component {
   constructor(props) {
     super(props);
+    let isActive;
+    this.props.isActive ? isActive = true : isActive = false;
     this.state = {
-      isActive: false,
+      isActive: isActive,
       type: this.props.type,
     }
     this.controlInput = this.controlInput.bind(this);

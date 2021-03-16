@@ -35,7 +35,7 @@ class App extends React.Component {
       <div className="app">
         <BrowserRouter>
           <Route path='/editor'>
-            <Editor />
+            <Editor grounds={this.state.grounds} />
           </Route>
           <Route exact path='/'>
             <Auth />

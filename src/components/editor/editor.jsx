@@ -4,6 +4,7 @@ import s from './editor.module.scss';
 import EditorSelectGrounds from './editor__select-grouds.jsx';
 import EditorInput from './editor__input.jsx';
 import EditorGroundStatus from './editor__ground-status.jsx';
+import CustomInput from './../custom-input/custom-input.jsx';
 
 export default class Editor extends React.Component {
   constructor(props) {
@@ -52,19 +53,19 @@ export default class Editor extends React.Component {
           grounds={this.props.grounds}
           onChange={this.changeVeiwData}
         />
-        <EditorInput
+        <CustomInput
           name="number"
           placeholder="Номер участка"
           value={this.state.number}
           onChange={this.controlChange}
         />
-        <EditorInput 
+        <CustomInput 
           name="size" 
           placeholder="Размер" 
           value={this.state.size}
           onChange={this.controlChange}
         />
-        <EditorInput 
+        <CustomInput 
           name="price"
           placeholder="Цена"
           value={this.state.price}
