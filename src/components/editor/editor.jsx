@@ -2,7 +2,6 @@ import React from 'react';
 import s from './editor.module.scss';
 
 import EditorSelectGrounds from './editor__select-grouds.jsx';
-import EditorInput from './editor__input.jsx';
 import EditorGroundStatus from './editor__ground-status.jsx';
 import CustomInput from './../custom-input/custom-input.jsx';
 
@@ -45,7 +44,25 @@ export default class Editor extends React.Component {
       [name]: value,
     });
   }
+  getInputsActive() {
+    let result = {
+      number: false,
+      size: false,
+      price: false,
+    };
+    if (this.state.number !== '') {
+      result.number = true;
+    }
+    if (this.state.size !== '') {
+      result.size = true;
+    }
+    if (this.state.price !== '') {
+      result.price = true;
+    }
+    return result;
+  }
   render() {
+    const inputsActive = this.getInputsActive();
     return (
       <form className={s.editor}>
         <h3 className={s.title}>Изменение информации</h3>
@@ -58,18 +75,21 @@ export default class Editor extends React.Component {
           placeholder="Номер участка"
           value={this.state.number}
           onChange={this.controlChange}
+          isActive={inputsActive.number}
         />
         <CustomInput 
           name="size" 
           placeholder="Размер" 
           value={this.state.size}
           onChange={this.controlChange}
+          isActive={inputsActive.size}
         />
         <CustomInput 
           name="price"
           placeholder="Цена"
           value={this.state.price}
           onChange={this.controlChange}
+          isActive={inputsActive.price}
         />
         <EditorGroundStatus
           value={this.state.status}

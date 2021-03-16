@@ -84,7 +84,21 @@ export default class Auth extends React.Component {
       return <Redirect to="/editor" />
     }
   }
+  getInputsActive() {
+    let result = {
+      login: false,
+      password: false,
+    };
+    if (this.state.valueLogin !== '') {
+      result.login = true;
+    }
+    if (this.state.valuePassword !== '') {
+      result.password = true;
+    }
+    return result;
+  }
   render() {
+    const inputsActive = this.getInputsActive();
     return (
       <div className={s.auth}>
         {this.redirect()}
@@ -97,18 +111,22 @@ export default class Auth extends React.Component {
         >
           <span className={s.title}>Авторизация</span>
           <CustomInput
+            className={s['custom-input']}
             type="text"
             name="login"
             placeholder="Логин"
             value={this.state.valueLogin}
             onChange={this.controlInput}
+            isActive={inputsActive.login}
           />
           <CustomInput
+            className={s['custom-input']}
             type="password"
             name="password"
             placeholder="Пароль"
             value={this.state.valuePassword}
             onChange={this.controlInput}
+            isActive={inputsActive.password}
           />
           <CustomButton 
             type="submit"

@@ -6,10 +6,10 @@ import PasswordButtons from './_password-buttons.jsx';
 export default class AuthInput extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props);
     let isActive;
-    this.props.isActive ? isActive = true : isActive = false;
+    this.props.value ? isActive = true : isActive = false;
     this.state = {
-      isActive: isActive,
       type: this.props.type,
     }
     this.controlInput = this.controlInput.bind(this);
@@ -30,7 +30,7 @@ export default class AuthInput extends React.Component {
   }
   getPlaceholder() {
     let selectors = s.placeholder;
-    if (this.state.isActive) {
+    if (this.props.isActive === true) {
       selectors += ' ' + s.placeholder_active;
     }
     return (
@@ -41,7 +41,7 @@ export default class AuthInput extends React.Component {
   }
   getInput() {
     let selectors = s.input;
-    if (this.state.isActive) {
+    if (this.props.isActive) {
       selectors += ' ' + s.input_active;
     }
     if (this.props.type === 'password') {
@@ -69,8 +69,13 @@ export default class AuthInput extends React.Component {
     });
   }
   render() {
+    let selectors = s['custom-input'];
+    if (this.props.className !== undefined) {
+      selectors += ' ' + this.props.className;
+    }
+    
     return (
-      <div className={s['custom-input']}>
+      <div className={selectors}>
         <label className={s.label}>
           {this.getPlaceholder()}
           {this.getInput()}
