@@ -81,7 +81,7 @@ export default class Auth extends React.Component {
   }
   redirect() {
     if (this.state.isAuth) {
-      return <Redirect to="/editor" />
+      return <Redirect to="/editor" />;
     }
   }
   getInputsActive() {

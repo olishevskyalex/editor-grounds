@@ -3,20 +3,23 @@ const app = express();
 const serverConfig = require('./server-config.json');
 const mapConfig = require('./map-config.json');
 const session = require('express-session');
-const e = require('express');
 
 app.use(express.static('public'));
 app.use(express.json()); 
 
 app.disable('x-powered-by');
 
+
+const expiryDate = new Date(Date.now() + 60 * 60 * 1000 * 24 * 7);
 app.use(session({
   secret: 'secret-key',
   resave: false,
   saveUninitialized: false,
   cookie: { 
     secure: false,
-  }
+    httpOnly: false,
+    expires: expiryDate,
+  },
 }));
 
 app.get('/editor', (req, res) => {
@@ -37,7 +40,6 @@ app.get('/api', (req, res) => {
 
 
 app.post('/auth', (req, res) => {
-  console.log(req.session.name, req.session.isAuth);
   const [login, password] = [req.body.login, req.body.password];
   let checkPassed = false;
   if (login === serverConfig.login && password === serverConfig.password) {

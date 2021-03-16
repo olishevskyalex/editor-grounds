@@ -6,7 +6,6 @@ import PasswordButtons from './_password-buttons.jsx';
 export default class AuthInput extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     let isActive;
     this.props.value ? isActive = true : isActive = false;
     this.state = {
@@ -73,7 +72,7 @@ export default class AuthInput extends React.Component {
     if (this.props.className !== undefined) {
       selectors += ' ' + this.props.className;
     }
-    
+
     return (
       <div className={selectors}>
         <label className={s.label}>

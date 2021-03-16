@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import regeneratorRuntime from 'regenerator-runtime';
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Redirect} from 'react-router-dom';
 import '@fortawesome/fontawesome-free/js/fontawesome';
 import '@fortawesome/fontawesome-free/js/solid';
 import '@fortawesome/fontawesome-free/js/regular';
@@ -30,15 +30,27 @@ class App extends React.Component {
       console.log(e);
     }
   }
+  getCookie(name) {
+    let matches = document.cookie.match(new RegExp(
+      "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+    ));
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+  getMainPage() {
+    if (this.getCookie('connect.sid') !== undefined) {
+      return <Redirect to="/editor" />;
+    }
+    return <Auth />;
+  }
   render() {
     return (
-      <div className="app">
+      <div className='app'>
         <BrowserRouter>
           <Route path='/editor'>
             <Editor grounds={this.state.grounds} />
           </Route>
           <Route exact path='/'>
-            <Auth />
+            {this.getMainPage()}
           </Route>
         </BrowserRouter>
       </div>
