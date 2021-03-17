@@ -27,7 +27,7 @@ app.get('/api/map-config', (req, res) => {
 
 app.put('/api/map-config', (req, res) => {
   if (req.session.isAuth !== true) {
-    res.status(401).send({isUpdata: false});
+    res.status(401).send({isUpdate: false});
     return;
   }
   const [key, number, size, price, status] = [
@@ -43,7 +43,7 @@ app.put('/api/map-config', (req, res) => {
     price: price,
     status: status,
   };
-  res.status(200).send({isUpdata: true});
+  res.status(200).send({isUpdate: true});
 });
 
 app.post('/api/auth', (req, res) => {

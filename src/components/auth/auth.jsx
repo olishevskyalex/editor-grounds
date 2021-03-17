@@ -4,7 +4,7 @@ import s from './auth.module.scss';
 
 import CustomInput from './../custom-input/custom-input.jsx';
 import CustomButton from './../custom-button/custom-button.jsx';
-import CustomError from './../custom-error/custom-error.jsx';
+import FormStatus from './../form-status/form-status.jsx';
 
 export default class Auth extends React.Component {
   constructor(props) {
@@ -22,7 +22,7 @@ export default class Auth extends React.Component {
       return;
     }
     return (
-      <CustomError text={this.state.error} />
+      <FormStatus text={this.state.error} />
     );
   }
   controlInput(e) {

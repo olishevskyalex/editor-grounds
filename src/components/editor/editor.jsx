@@ -6,7 +6,7 @@ import SelectGrounds from './_select-grouds.jsx';
 import GroundStatus from './_ground-status.jsx';
 import CustomInput from './../custom-input/custom-input.jsx';
 import CustomButton from './../custom-button/custom-button.jsx';
-import CustomError from './../custom-error/custom-error.jsx';
+import FormStatus from '../form-status/form-status.jsx';
 
 export default class Editor extends React.Component {
   constructor(props) {
@@ -17,7 +17,7 @@ export default class Editor extends React.Component {
       size: '',
       price: '',
       status: 'default',
-      error: null,
+      formStatus: null,
     }
     this.changeVeiwData = this.changeVeiwData.bind(this);
     this.controlChange = this.controlChange.bind(this);
@@ -85,22 +85,32 @@ export default class Editor extends React.Component {
         body: JSON.stringify(body),
       });
       if (response.status === 401) {
-        throw new Error('Для изменения данных, необходима авторизация.');
+        throw new Error('Для изменения данных необходима авторизация.');
       }
       let answer = await response.json();
+      if (answer.isUpdate) {
+        this.setState({
+          formStatus: `Изменения сохранены`,
+        });
+        setTimeout(() => {
+          this.setState({
+            formStatus: null,
+          });
+        }, 3000);
+      }
       console.log(answer);
     } catch(e) {
       this.setState({
-        error: e.message,
+        formStatus: e.message,
       });
     }
   }
-  getError() {
-    if (this.state.error === null) {
+  getFormStatus() {
+    if (this.state.formStatus === null) {
       return;
     } 
     return (
-      <CustomError text={this.state.error} />
+      <FormStatus text={this.state.formStatus} />
     );
   }
   render() {
@@ -110,7 +120,7 @@ export default class Editor extends React.Component {
     }
     return (
       <div className={s.editor}>
-        {this.getError()}
+        {this.getFormStatus()}
         <form 
         className={s.form}
         onSubmit={this.formHandler}
