@@ -1,7 +1,7 @@
 import React from 'react';
-import s from './editor__select-grouds.module.scss';
+import s from './_select-grouds.module.scss';
 
-export default class EditorSelectGrounds extends React.Component {
+export default class SelectGrounds extends React.Component {
   constructor(props) {
     super(props);
     this.props = props;

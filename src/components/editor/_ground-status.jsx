@@ -1,11 +1,11 @@
 import React from 'react';
-import s from './editor__ground-status.module.scss';
+import s from './_ground-status.module.scss';
 
-export default function EditorGroundStatus(props) {
+export default function GroundStatus(props) {
   return (
     <select 
       name="status"
-      className={s['editor__ground-status']}
+      className={s['ground-status']}
       value={props.value}
       onChange={props.onChange}
     >

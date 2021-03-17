@@ -1,8 +1,8 @@
 import React from 'react';
 import s from './editor.module.scss';
 
-import EditorSelectGrounds from './editor__select-grouds.jsx';
-import EditorGroundStatus from './editor__ground-status.jsx';
+import SelectGrounds from './_select-grouds.jsx';
+import GroundStatus from './_ground-status.jsx';
 import CustomInput from './../custom-input/custom-input.jsx';
 
 export default class Editor extends React.Component {
@@ -66,7 +66,7 @@ export default class Editor extends React.Component {
     return (
       <form className={s.editor}>
         <h3 className={s.title}>Изменение информации</h3>
-        <EditorSelectGrounds
+        <SelectGrounds
           grounds={this.props.grounds}
           onChange={this.changeVeiwData}
         />
@@ -91,7 +91,7 @@ export default class Editor extends React.Component {
           onChange={this.controlChange}
           isActive={inputsActive.price}
         />
-        <EditorGroundStatus
+        <GroundStatus
           value={this.state.status}
           onChange={this.controlChange}
         />
