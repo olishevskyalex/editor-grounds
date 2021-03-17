@@ -21,13 +21,28 @@ app.use(session({
   },
 }));
 
-
-
-app.get('/api', (req, res) => {
+app.get('/api/map-config', (req, res) => {
   res.send(mapConfig);
 });
 
-app.post('/auth', (req, res) => {
+app.put('/api/map-config', (req, res) => {
+  const [key, number, size, price, status] = [
+    req.body.key, 
+    req.body.number, 
+    req.body.size, 
+    req.body.price, 
+    req.body.status
+  ];
+  mapConfig[key] = {
+    number: number,
+    size: size,
+    price: price,
+    status: status,
+  };
+  res.status(200).send({isUpdata: true});
+});
+
+app.post('/api/auth', (req, res) => {
   const [login, password] = [req.body.login, req.body.password];
   let checkPassed = false;
   if (login === serverConfig.login && password === serverConfig.password) {
@@ -46,7 +61,6 @@ app.post('/auth', (req, res) => {
 app.post('/api/exit', (req, res) => {
   req.session.destroy();
   res.status(200).send({isExit: true});
-  console.log(1);
 });
 
 app.get('*', (req, res) => {

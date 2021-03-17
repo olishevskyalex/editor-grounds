@@ -12,10 +12,10 @@ export default class ExitButton extends React.Component {
   async sendForm(e) {
     e.preventDefault();
     try {
-      const request = await fetch('/api/exit', {
+      let request = await fetch('/api/exit', {
         method: 'POST',
       });
-      const json = await request.json();
+      let json = await request.json();
       if (json.isExit) {
         this.props.changeAuthState(false);
         this.deleteCookie('connect.sid');

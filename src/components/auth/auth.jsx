@@ -48,7 +48,7 @@ export default class Auth extends React.Component {
         login: this.state.valueLogin,
         password: this.state.valuePassword,
       };
-      let response = await fetch('/auth', {
+      let response = await fetch('/api/auth', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

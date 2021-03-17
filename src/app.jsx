@@ -29,7 +29,7 @@ class App extends React.Component {
   }
   async getMapConfig() {
     try {
-      let response = await fetch('/api');
+      let response = await fetch('/api/map-config');
       let json = await response.json();
       this.setState({
         grounds: json,

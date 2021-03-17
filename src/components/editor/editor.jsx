@@ -19,6 +19,7 @@ export default class Editor extends React.Component {
     }
     this.changeVeiwData = this.changeVeiwData.bind(this);
     this.controlChange = this.controlChange.bind(this);
+    this.formHandler = this.formHandler.bind(this);
   }
   changeVeiwData(e) {
     if (e.target.value === 'default') {
@@ -63,13 +64,40 @@ export default class Editor extends React.Component {
     }
     return result;
   }
+  async formHandler(e) {
+    try {
+      e.preventDefault();
+      const body = {
+        key: e.target[0].value,
+        number: e.target[1].value,
+        size: e.target[2].value,
+        price: e.target[3].value,
+        status: e.target[4].value,
+      };
+      console.log(body);
+      let response = await fetch('/api/map-config', {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+      let answer = await response.json();
+      console.log(answer);
+    } catch(e) {
+      console.log(e);
+    }
+  }
   render() {
     const inputsActive = this.getInputsActive();
     if (!this.props.isAuth) {
       return <Redirect to="/auth" />;
     }
     return (
-      <form className={s.editor}>
+      <form 
+        className={s.editor}
+        onSubmit={this.formHandler}
+      >
         <h3 className={s.title}>Изменение информации</h3>
         <SelectGrounds
           className={s.select}
