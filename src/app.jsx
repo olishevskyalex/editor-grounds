@@ -10,6 +10,7 @@ import './app.scss';
 
 import Editor from './components/editor/editor.jsx';
 import Auth from './components/auth/auth.jsx';
+import ExitButton from './components/exit-button/exit-button.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -48,6 +49,7 @@ class App extends React.Component {
         <BrowserRouter>
           <Route path='/editor'>
             <Editor grounds={this.state.grounds} />
+            <ExitButton />
           </Route>
           <Route exact path='/'>
             {this.getMainPage()}
