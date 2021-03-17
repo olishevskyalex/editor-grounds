@@ -1,7 +1,8 @@
+const fsPromises = require('fs').promises;
 const express = require('express');
 const app = express();
 const serverConfig = require('./server-config.json');
-const mapConfig = require('./map-config.json');
+let mapConfig = require('./map-config.json');
 const session = require('express-session');
 
 app.use(express.static('public'));
@@ -20,6 +21,14 @@ app.use(session({
     expires: expiryDate,
   },
 }));
+
+async function updateConfig() {
+  try {
+    fsPromises.writeFile('map-config.json', JSON.stringify(mapConfig));
+  } catch(e) {
+    console.log(e);
+  }
+}
 
 app.get('/api/map-config', (req, res) => {
   res.send(mapConfig);
@@ -43,6 +52,7 @@ app.put('/api/map-config', (req, res) => {
     price: price,
     status: status,
   };
+  updateConfig();
   res.status(200).send({isUpdate: true});
 });
 
