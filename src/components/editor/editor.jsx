@@ -76,7 +76,12 @@ export default class Editor extends React.Component {
         price: e.target[3].value,
         status: e.target[4].value,
       };
-      console.log(body);
+      if (body.key === 'default') {
+        throw new Error('Выберите ID участка, которое вы хотите изменить');
+      }
+      if (e.target[4].value === 'default') {
+        throw new Error('Выберите статус участка');
+      }
       let response = await fetch('/api/map-config', {
         method: "PUT",
         headers: {
@@ -85,7 +90,7 @@ export default class Editor extends React.Component {
         body: JSON.stringify(body),
       });
       if (response.status === 401) {
-        throw new Error('Для изменения данных необходима авторизация.');
+        throw new Error('Для изменения данных необходима авторизация');
       }
       let answer = await response.json();
       if (answer.isUpdate) {
