@@ -18,9 +18,13 @@ export default class SelectGrounds extends React.Component {
     return options;
   }
   render() {
+    let selectors = s['slect-grounds'];
+    if (this.props.className !== undefined) {
+      selectors += ' ' + this.props.className;
+    }
     return (
       <select 
-        className={s['slect-grounds']} 
+        className={selectors} 
         name="ground-id"
         onChange={this.props.onChange}
       >

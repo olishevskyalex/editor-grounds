@@ -4,6 +4,7 @@ import s from './editor.module.scss';
 import SelectGrounds from './_select-grouds.jsx';
 import GroundStatus from './_ground-status.jsx';
 import CustomInput from './../custom-input/custom-input.jsx';
+import CustomButton from './../custom-button/custom-button.jsx';
 
 export default class Editor extends React.Component {
   constructor(props) {
@@ -67,24 +68,28 @@ export default class Editor extends React.Component {
       <form className={s.editor}>
         <h3 className={s.title}>Изменение информации</h3>
         <SelectGrounds
+          className={s.select}
           grounds={this.props.grounds}
           onChange={this.changeVeiwData}
         />
         <CustomInput
+          className={s['custom-input']}
           name="number"
           placeholder="Номер участка"
           value={this.state.number}
           onChange={this.controlChange}
           isActive={inputsActive.number}
         />
-        <CustomInput 
+        <CustomInput
+          className={s['custom-input']}
           name="size" 
           placeholder="Размер" 
           value={this.state.size}
           onChange={this.controlChange}
           isActive={inputsActive.size}
         />
-        <CustomInput 
+        <CustomInput
+          className={s['custom-input']}
           name="price"
           placeholder="Цена"
           value={this.state.price}
@@ -92,10 +97,11 @@ export default class Editor extends React.Component {
           isActive={inputsActive.price}
         />
         <GroundStatus
+          className={s.select}
           value={this.state.status}
           onChange={this.controlChange}
         />
-        <button className={s.button} type="submit">Cохранить</button>
+        <CustomButton text="Сохранить" />
       </form>
     );
   }

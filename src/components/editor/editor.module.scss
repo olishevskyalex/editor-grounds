@@ -1,8 +1,11 @@
 .editor {
   width: 400px;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-row-gap: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #673ab7;
+  padding: 50px 25px;
 }
 
 .title {
@@ -10,21 +13,10 @@
   font-size: 32px;
   color: #fff;
   text-align: center;
-  margin: 0;
+  margin: 0 0 30px;
 }
 
-.button {
-  height: 50px;
-  font-family: Arial;
-  font-size: 18px;
-  font-weight: 700;
-  color: #222;
-  background: coral;
-  outline: none;
-  border: 0;
-  transition: background .2s;
-  cursor: pointer;
-  &:hover {
-    background: rgb(209, 102, 64);
-  }
+.custom-input,
+.select {
+  margin-bottom: 20px;
 }
