@@ -5,6 +5,7 @@ import SelectGrounds from './_select-grouds.jsx';
 import GroundStatus from './_ground-status.jsx';
 import CustomInput from './../custom-input/custom-input.jsx';
 import CustomButton from './../custom-button/custom-button.jsx';
+import { Redirect } from 'react-router';
 
 export default class Editor extends React.Component {
   constructor(props) {
@@ -64,6 +65,9 @@ export default class Editor extends React.Component {
   }
   render() {
     const inputsActive = this.getInputsActive();
+    if (!this.props.isAuth) {
+      return <Redirect to="/auth" />;
+    }
     return (
       <form className={s.editor}>
         <h3 className={s.title}>Изменение информации</h3>

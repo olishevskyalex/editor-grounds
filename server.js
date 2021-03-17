@@ -9,7 +9,6 @@ app.use(express.json());
 
 app.disable('x-powered-by');
 
-
 const expiryDate = new Date(Date.now() + 60 * 60 * 1000 * 24 * 7);
 app.use(session({
   secret: 'secret-key',
@@ -22,22 +21,11 @@ app.use(session({
   },
 }));
 
-app.get('/editor', (req, res) => {
-  if (req.session.isAuth === true) {
-    res.sendFile(__dirname + '/public/index.html');
-    return;
-  }
-  res.status(403).send('Error 403');
-});
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
-});
 
 app.get('/api', (req, res) => {
   res.send(mapConfig);
 });
-
 
 app.post('/auth', (req, res) => {
   const [login, password] = [req.body.login, req.body.password];
@@ -53,6 +41,16 @@ app.post('/auth', (req, res) => {
     return;
   }
   res.status(200).send({isAuth: false});
+});
+
+app.post('/api/exit', (req, res) => {
+  req.session.destroy();
+  res.status(200).send({isExit: true});
+  console.log(1);
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 app.listen(serverConfig.port, () => {

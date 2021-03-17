@@ -13,7 +13,6 @@ export default class Auth extends React.Component {
       valueLogin: '',
       valuePassword: '',
       error: null,
-      isAuth: false,
     }
     this.sendFrom = this.sendFrom.bind(this);
     this.controlInput = this.controlInput.bind(this);
@@ -74,14 +73,7 @@ export default class Auth extends React.Component {
       valuePassword: '',
     });
     if (isAuth) {
-      this.setState({
-        isAuth: true,
-      })
-    }
-  }
-  redirect() {
-    if (this.state.isAuth) {
-      return <Redirect to="/editor" />;
+      this.props.changeAuthState(isAuth);
     }
   }
   getInputsActive() {
@@ -99,9 +91,11 @@ export default class Auth extends React.Component {
   }
   render() {
     const inputsActive = this.getInputsActive();
+    if (this.props.isAuth) {
+      return <Redirect to='/editor' />
+    }
     return (
       <div className={s.auth}>
-        {this.redirect()}
         {this.getError()}
         <form 
           action="/auth" 

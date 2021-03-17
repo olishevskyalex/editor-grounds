@@ -15,10 +15,17 @@ import ExitButton from './components/exit-button/exit-button.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      grounds: null
+    let isAuth = false;
+    if (this.checkCookie()) {
+      isAuth = true;
     }
+    this.state = {
+      grounds: null,
+      isAuth: isAuth,
+    }
+
     this.getMapConfig();
+    this.changeAuthState = this.changeAuthState.bind(this);
   }
   async getMapConfig() {
     try {
@@ -37,22 +44,41 @@ class App extends React.Component {
     ));
     return matches ? decodeURIComponent(matches[1]) : undefined;
   }
-  getMainPage() {
-    if (this.getCookie('connect.sid') !== undefined) {
-      return <Redirect to="/editor" />;
+  checkCookie() {
+    if (this.getCookie('connect.sid')) {
+      return true;
     }
-    return <Auth />;
+    return false;
+  }
+  changeAuthState(arg) {
+    if(typeof arg !== 'boolean') {
+      return;
+    }
+    this.setState({
+      isAuth: arg,
+    });
   }
   render() {
     return (
       <div className='app'>
         <BrowserRouter>
           <Route path='/editor'>
-            <Editor grounds={this.state.grounds} />
-            <ExitButton />
+            <Editor 
+              isAuth={this.state.isAuth}
+              grounds={this.state.grounds} 
+            />
+            <ExitButton 
+              changeAuthState={this.changeAuthState}
+            />
           </Route>
           <Route exact path='/'>
-            {this.getMainPage()}
+            <Redirect to="/auth" />
+          </Route>
+          <Route path='/auth'>
+            <Auth 
+              isAuth={this.state.isAuth}
+              changeAuthState={this.changeAuthState}
+            />
           </Route>
         </BrowserRouter>
       </div>
