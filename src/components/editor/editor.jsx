@@ -1,11 +1,12 @@
 import React from 'react';
 import s from './editor.module.scss';
+import { Redirect } from 'react-router';
 
 import SelectGrounds from './_select-grouds.jsx';
 import GroundStatus from './_ground-status.jsx';
 import CustomInput from './../custom-input/custom-input.jsx';
 import CustomButton from './../custom-button/custom-button.jsx';
-import { Redirect } from 'react-router';
+import CustomError from './../custom-error/custom-error.jsx';
 
 export default class Editor extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ export default class Editor extends React.Component {
       size: '',
       price: '',
       status: 'default',
+      error: null,
     }
     this.changeVeiwData = this.changeVeiwData.bind(this);
     this.controlChange = this.controlChange.bind(this);
@@ -82,11 +84,24 @@ export default class Editor extends React.Component {
         },
         body: JSON.stringify(body),
       });
+      if (response.status === 401) {
+        throw new Error('Для изменения данных, необходима авторизация.');
+      }
       let answer = await response.json();
       console.log(answer);
     } catch(e) {
-      console.log(e);
+      this.setState({
+        error: e.message,
+      });
     }
+  }
+  getError() {
+    if (this.state.error === null) {
+      return;
+    } 
+    return (
+      <CustomError text={this.state.error} />
+    );
   }
   render() {
     const inputsActive = this.getInputsActive();
@@ -94,8 +109,10 @@ export default class Editor extends React.Component {
       return <Redirect to="/auth" />;
     }
     return (
-      <form 
-        className={s.editor}
+      <div className={s.editor}>
+        {this.getError()}
+        <form 
+        className={s.form}
         onSubmit={this.formHandler}
       >
         <h3 className={s.title}>Изменение информации</h3>
@@ -135,6 +152,7 @@ export default class Editor extends React.Component {
         />
         <CustomButton text="Сохранить" />
       </form>
+      </div>
     );
   }
 }
