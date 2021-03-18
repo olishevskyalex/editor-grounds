@@ -1,9 +1,11 @@
 const fsPromises = require('fs').promises;
 const express = require('express');
 const app = express();
+const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+
 const serverConfig = require('./server-config.json');
 let mapConfig = require('./map-config.json');
-const session = require('express-session');
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -11,10 +13,14 @@ app.use(express.json());
 app.disable('x-powered-by');
 
 const expiryDate = new Date(Date.now() + 60 * 60 * 1000 * 24 * 7);
+const fileStoreOptions = {
+  ttl: expiryDate,
+};
 app.use(session({
-  secret: 'secret-key',
+  secret: serverConfig['session-key'],
   resave: false,
   saveUninitialized: false,
+  store: new FileStore(fileStoreOptions),
   cookie: { 
     secure: false,
     httpOnly: false,
