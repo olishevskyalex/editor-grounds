@@ -3,14 +3,14 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
+const helmet = require('helmet');
 
 const serverConfig = require('./server-config.json');
 let mapConfig = require('./map-config.json');
 
 app.use(express.static('public'));
 app.use(express.json()); 
-
-app.disable('x-powered-by');
+app.use(helmet());
 
 const expiryDate = new Date(Date.now() + 60 * 60 * 1000 * 24 * 7);
 const fileStoreOptions = {
@@ -30,7 +30,7 @@ app.use(session({
 
 async function updateConfig() {
   try {
-    fsPromises.writeFile('map-config.json', JSON.stringify(mapConfig));
+    await fsPromises.writeFile('map-config.json', JSON.stringify(mapConfig));
   } catch(e) {
     console.log(e);
   }
