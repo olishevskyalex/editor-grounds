@@ -48,6 +48,12 @@ export default class Auth extends React.Component {
         login: this.state.valueLogin,
         password: this.state.valuePassword,
       };
+      if (authData.login === '') {
+        throw new Error('Введите логин');
+      }
+      if (authData.password === '') {
+        throw new Error('Введите пароль');
+      }
       let response = await fetch('/api/auth', {
         method: 'POST',
         headers: {
@@ -56,6 +62,10 @@ export default class Auth extends React.Component {
         body: JSON.stringify(authData),
       });
       let json = await response.json();
+      this.setState({
+        valueLogin: '',
+        valuePassword: '',
+      });
       if (!json.isAuth) {
         throw new Error('Неправильный логин или пароль.');
       }
@@ -68,10 +78,6 @@ export default class Auth extends React.Component {
         error: e.message,
       });
     }
-    this.setState({
-      valueLogin: '',
-      valuePassword: '',
-    });
     if (isAuth) {
       this.props.changeAuthState(isAuth);
     }
