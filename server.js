@@ -29,37 +29,39 @@ app.use(session({
 }));
 
 async function updateConfig() {
-  try {
-    await fsPromises.writeFile('map-config.json', JSON.stringify(mapConfig));
-  } catch(e) {
-    console.log(e);
-  }
+  await fsPromises.writeFile('map-config.json', JSON.stringify(mapConfig));
 }
 
 app.get('/api/map-config', (req, res) => {
   res.send(mapConfig);
 });
 
-app.put('/api/map-config', (req, res) => {
-  if (req.session.isAuth !== true) {
-    res.status(401).send({isUpdate: false});
-    return;
+app.put('/api/map-config', async (req, res, next) => {
+  try {
+    //throw Error('function updateConfig failed');
+    if (req.session.isAuth !== true) {
+      res.status(401).send({isUpdate: false});
+      return;
+    }
+    const key = req.body.key;
+    const number = req.body.number;
+    const size = req.body.size;
+    const price = req.body.price;
+    const status = req.body.status;
+    mapConfig[key] = {
+      number: number,
+      size: size,
+      price: price,
+      status: status,
+    };
+    let promise = await updateConfig();
+    if (promise !== undefined) {
+      throw new Error('function updateConfig failed');
+    }
+    res.status(200).send({isUpdate: true});
+  } catch(e) {
+    next(e);
   }
-  const [key, number, size, price, status] = [
-    req.body.key, 
-    req.body.number, 
-    req.body.size, 
-    req.body.price, 
-    req.body.status
-  ];
-  mapConfig[key] = {
-    number: number,
-    size: size,
-    price: price,
-    status: status,
-  };
-  updateConfig();
-  res.status(200).send({isUpdate: true});
 });
 
 app.post('/api/auth', (req, res) => {
@@ -85,6 +87,15 @@ app.post('/api/exit', (req, res) => {
 
 app.get('*', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
+});
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  if (err.message === 'function updateConfig failed') {
+    res.status(500).send({isUpdate: false});
+    return;
+  }
+  res.status(500).send('server failed');
 });
 
 app.listen(serverConfig.port, () => {
