@@ -4,6 +4,7 @@ const app = express();
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const helmet = require('helmet');
+const crypto = require('crypto');
 
 const serverConfig = require('./server-config.json');
 let mapConfig = require('./map-config.json');
@@ -30,6 +31,10 @@ app.use(session({
 
 async function updateConfig() {
   await fsPromises.writeFile('map-config.json', JSON.stringify(mapConfig));
+}
+
+function getHash(password) {
+  return crypto.createHash('sha256').update(password).digest("hex");
 }
 
 app.get('/api/map-config', (req, res) => {
@@ -64,7 +69,8 @@ app.put('/api/map-config', async (req, res, next) => {
 });
 
 app.post('/api/auth', (req, res) => {
-  const [login, password] = [req.body.login, req.body.password];
+  const login = req.body.login;
+  const password = getHash(req.body.password);
   let checkPassed = false;
   if (login === serverConfig.login && password === serverConfig.password) {
     checkPassed = true;
