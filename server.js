@@ -5,13 +5,15 @@ const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const helmet = require('helmet');
 const crypto = require('crypto');
+const cors = require('cors');
 
 const serverConfig = require('./server-config.json');
 let mapConfig = require('./map-config.json');
 
 app.use(express.static('public'));
 app.use(express.json()); 
-app.use(helmet());
+//app.use(helmet());
+app.use(cors());
 
 const expiryDate = new Date(Date.now() + 60 * 60 * 1000 * 24 * 7);
 const fileStoreOptions = {
