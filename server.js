@@ -1,4 +1,7 @@
-const fsPromises = require('fs').promises;
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
+const fsPromises = fs.promises;
 const express = require('express');
 const app = express();
 const session = require('express-session');
@@ -9,6 +12,14 @@ const cors = require('cors');
 
 const serverConfig = require('./server-config.json');
 let mapConfig = require('./map-config.json');
+
+app.use ((req, res, next) => {
+  if (req.secure) {
+    next();
+    return;
+  } 
+  res.redirect('https://' + req.hostname + ':' + String(Number(serverConfig.port) + 443) + req.url);
+});
 
 app.use(express.static('public'));
 app.use(express.json()); 
@@ -25,7 +36,7 @@ app.use(session({
   saveUninitialized: false,
   store: new FileStore(fileStoreOptions),
   cookie: { 
-    secure: false,
+    secure: true,
     httpOnly: false,
     expires: expiryDate,
   },
@@ -109,6 +120,12 @@ app.use((err, req, res, next) => {
   res.status(500).send('server failed');
 });
 
-app.listen(serverConfig.port, () => {
-  console.log(`Started server, port: ${serverConfig.port}`);
-});
+let serverHttp = http.createServer(app).listen(serverConfig.port);
+
+let sslOptions = {
+   key: fs.readFileSync('ssl/key.pem'),
+   cert: fs.readFileSync('ssl/cert.pem'),
+   passphrase: serverConfig['ssl-phrase']
+};
+
+let serverHttps = https.createServer(sslOptions, app).listen(Number(serverConfig.port) + 443);
