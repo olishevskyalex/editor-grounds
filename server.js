@@ -85,7 +85,11 @@ app.post('/api/exit', (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  if (req.path === '/' || req.path === '/auth' || req.path === '/editor') {
+    res.sendFile(__dirname + '/public/index.html');
+    return;
+  }
+  res.status(404).send('Error 404');
 });
 
 app.use((err, req, res, next) => {
