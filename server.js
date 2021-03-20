@@ -38,7 +38,6 @@ app.get('/api/map-config', (req, res) => {
 
 app.put('/api/map-config', async (req, res, next) => {
   try {
-    //throw Error('function updateConfig failed');
     if (req.session.isAuth !== true) {
       res.status(401).send({isUpdate: false});
       return;

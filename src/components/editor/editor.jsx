@@ -92,6 +92,9 @@ export default class Editor extends React.Component {
       if (response.status === 401) {
         throw new Error('Для изменения данных необходима авторизация');
       }
+      if (response.status === 500) {
+        throw new Error('К сожалению, произошла ошибка на сервере. Попробуйте сохранить изменения еще раз.')
+      }
       let answer = await response.json();
       if (answer.isUpdate) {
         this.setState({
@@ -103,7 +106,6 @@ export default class Editor extends React.Component {
           });
         }, 3000);
       }
-      console.log(answer);
     } catch(e) {
       this.setState({
         formStatus: e.message,
