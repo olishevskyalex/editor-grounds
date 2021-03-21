@@ -106,6 +106,7 @@ export default class Editor extends React.Component {
           });
         }, 3000);
       }
+      this.props.updateConfig();
     } catch(e) {
       this.setState({
         formStatus: e.message,

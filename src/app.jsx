@@ -26,6 +26,7 @@ class App extends React.Component {
 
     this.getMapConfig();
     this.changeAuthState = this.changeAuthState.bind(this);
+    this.getMapConfig = this.getMapConfig.bind(this);
   }
   async getMapConfig() {
     try {
@@ -65,7 +66,8 @@ class App extends React.Component {
           <Route path='/editor'>
             <Editor 
               isAuth={this.state.isAuth}
-              grounds={this.state.grounds} 
+              grounds={this.state.grounds}
+              updateConfig={this.getMapConfig}
             />
             <ExitButton 
               changeAuthState={this.changeAuthState}
