@@ -77,7 +77,7 @@ export default class Editor extends React.Component {
         status: e.target[4].value,
       };
       if (body.key === 'default') {
-        throw new Error('Выберите ID участка, которое вы хотите изменить');
+        throw new Error('Выберите участок, который вы хотите изменить');
       }
       if (e.target[4].value === 'default') {
         throw new Error('Выберите статус участка');
